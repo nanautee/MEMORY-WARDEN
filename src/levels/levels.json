@@ -1,0 +1,144 @@
+[
+  {
+    "id": 1,
+    "name": "FIRST ALLOCATION",
+    "description": "Learn the basics of memory management.",
+    "story": "SYSTEM BOOT... Memory sectors online.\nYou are the Memory Warden.\nA corrupted process has left orphaned blocks.\nLearn to allocate and free memory to restore order.",
+    "objectives": [
+      { "type": "alloc", "description": "Allocate a 256-byte block", "target": 1, "completed": false },
+      { "type": "free", "description": "Free the allocated block", "target": 1, "completed": false },
+      { "type": "alloc", "description": "Allocate three blocks (128, 64, 512)", "target": 3, "completed": false }
+    ],
+    "初始Blocks": [],
+    "maxMemory": 4096,
+    "solution": [
+      { "cmd": "alloc 256", "explain": "Allocate 256 bytes. Block #0 created." },
+      { "cmd": "free 0", "explain": "Free block #0. Memory returned." },
+      { "cmd": "alloc 128", "explain": "Allocate first block: 128 bytes." },
+      { "cmd": "alloc 64", "explain": "Allocate second block: 64 bytes." },
+      { "cmd": "alloc 512", "explain": "Allocate third block: 512 bytes. Level complete!" }
+    ],
+    "hints": ["alloc <size> -- allocate memory", "free <id> -- release a block", "blocks -- list all blocks"]
+  },
+  {
+    "id": 2,
+    "name": "DEFRAGMENTATION",
+    "description": "Merge fragmented free blocks into contiguous space.",
+    "story": "WARNING: Memory fragmentation detected.\nThe system is running slow.\nMultiple free blocks are scattered between used blocks.\nMerge them to recover contiguous memory.",
+    "objectives": [
+      { "type": "defrag", "description": "Defragment memory", "target": 1, "completed": false },
+      { "type": "alloc", "description": "Allocate a 1024-byte block", "target": 1, "completed": false }
+    ],
+    "初始Blocks": [
+      { "size": 256, "isFree": true },
+      { "size": 512, "isFree": true },
+      { "size": 256, "isFree": true },
+      { "size": 128, "isFree": false },
+      { "size": 64, "isFree": true },
+      { "size": 64, "isFree": true },
+      { "size": 256, "isFree": false },
+      { "size": 1024, "isFree": false }
+    ],
+    "maxMemory": 4096,
+    "solution": [
+      { "cmd": "blocks", "explain": "Check state: three free blocks in a row (256+512+256)." },
+      { "cmd": "defrag", "explain": "Merge adjacent free blocks: 256+512+256 = 1024 bytes!" },
+      { "cmd": "alloc 1024", "explain": "Allocate 1024 from merged block. Level complete!" }
+    ],
+    "hints": ["defrag -- merge adjacent free blocks", "After defrag, a large contiguous space appears", "Then allocate 1024 bytes"]
+  },
+  {
+    "id": 3,
+    "name": "MEMORY LEAKS",
+    "description": "Scan for and eliminate memory leaks.",
+    "story": "CRITICAL: Memory leaks detected in sector 7.\nZombie blocks are consuming resources.\nScan the memory, find the leaks, and destroy them.",
+    "objectives": [
+      { "type": "scan", "description": "Scan for memory leaks", "target": 1, "completed": false },
+      { "type": "free_all_leaks", "description": "Free all leaked blocks", "target": 3, "completed": false }
+    ],
+    "初始Blocks": [
+      { "size": 64, "isFree": false, "isLeak": false },
+      { "size": 128, "isFree": false, "isLeak": true },
+      { "size": 256, "isFree": false, "isLeak": false },
+      { "size": 512, "isFree": false, "isLeak": true },
+      { "size": 128, "isFree": false, "isLeak": true },
+      { "size": 64, "isFree": false, "isLeak": false }
+    ],
+    "maxMemory": 4096,
+    "solution": [
+      { "cmd": "scan", "explain": "Scan memory -- 3 leaks detected!" },
+      { "cmd": "blocks", "explain": "Leaks marked as LEAK: blocks #1, #3, #4." },
+      { "cmd": "free 1", "explain": "Free leaked block #1 (128 bytes)." },
+      { "cmd": "free 3", "explain": "Free leaked block #3 (512 bytes)." },
+      { "cmd": "free 4", "explain": "Free leaked block #4 (128 bytes). Level complete!" }
+    ],
+    "hints": ["scan -- find leaked blocks", "Leaked blocks show LEAK in 'blocks' output", "free <id> -- free each leaked block"]
+  },
+  {
+    "id": 4,
+    "name": "SORT & OPTIMIZE",
+    "description": "Sort blocks by size to optimize allocation.",
+    "story": "PERFORMANCE ALERT: Memory blocks are disorganized.\nSort them by size to optimize the buddy allocator.\nThis will group free blocks for defragmentation.",
+    "objectives": [
+      { "type": "sort", "description": "Sort all blocks by size", "target": 1, "completed": false },
+      { "type": "defrag", "description": "Defragment after sorting", "target": 1, "completed": false },
+      { "type": "alloc", "description": "Allocate a 1024-byte block", "target": 1, "completed": false }
+    ],
+    "初始Blocks": [
+      { "size": 512, "isFree": true },
+      { "size": 128, "isFree": false },
+      { "size": 256, "isFree": true },
+      { "size": 64, "isFree": false },
+      { "size": 1024, "isFree": true },
+      { "size": 128, "isFree": true },
+      { "size": 256, "isFree": false },
+      { "size": 64, "isFree": true }
+    ],
+    "maxMemory": 4096,
+    "solution": [
+      { "cmd": "sort", "explain": "Sort blocks by size. Free blocks group together." },
+      { "cmd": "defrag", "explain": "Merge adjacent free: 256+512+1024 = 1792 bytes!" },
+      { "cmd": "alloc 1024", "explain": "Allocate 1024 from the large block. Level complete!" }
+    ],
+    "hints": ["sort -- order blocks by size", "Then defrag to merge adjacent free blocks", "Finally alloc 1024 should succeed"]
+  },
+  {
+    "id": 5,
+    "name": "FULL RECOVERY",
+    "description": "Combine all skills to fully restore memory integrity.",
+    "story": "FINAL SECTOR: System integrity critical.\nFragmentation, leaks, and disorder everywhere.\nUse everything you have learned to restore this sector.\nSort, defrag, scan, and allocate with precision.",
+    "objectives": [
+      { "type": "scan", "description": "Scan for leaks", "target": 1, "completed": false },
+      { "type": "free_all_leaks", "description": "Free all leaked blocks", "target": 2, "completed": false },
+      { "type": "sort", "description": "Sort blocks by size", "target": 1, "completed": false },
+      { "type": "defrag", "description": "Defragment memory", "target": 1, "completed": false },
+      { "type": "alloc", "description": "Allocate a 2048-byte block", "target": 1, "completed": false }
+    ],
+    "初始Blocks": [
+      { "size": 512, "isFree": false, "isLeak": true },
+      { "size": 256, "isFree": true },
+      { "size": 128, "isFree": false },
+      { "size": 512, "isFree": true },
+      { "size": 64, "isFree": false, "isLeak": true },
+      { "size": 256, "isFree": true },
+      { "size": 1024, "isFree": false },
+      { "size": 128, "isFree": true },
+      { "size": 64, "isFree": true },
+      { "size": 256, "isFree": false },
+      { "size": 128, "isFree": true }
+    ],
+    "maxMemory": 4096,
+    "solution": [
+      { "cmd": "scan", "explain": "Scan -- 2 leaks found in blocks #0 and #4." },
+      { "cmd": "free 0", "explain": "Free leaked block #0 (512 bytes)." },
+      { "cmd": "free 4", "explain": "Free leaked block #4 (64 bytes). All leaks cleared." },
+      { "cmd": "sort", "explain": "Sort by size. Free blocks (64+128+128+256+256+512) group together." },
+      { "cmd": "defrag", "explain": "Merge: 64+128+128+256+256+512 = 1344 bytes contiguous." },
+      { "cmd": "alloc 2048", "explain": "Wait -- 1344 < 2048! We need more space. Free block #6 (1024) first." },
+      { "cmd": "free 6", "explain": "Free the 1024-byte block. Now we have 1344+1024 = 2368 free." },
+      { "cmd": "defrag", "explain": "Defrag again: merge all free into 2368 bytes." },
+      { "cmd": "alloc 2048", "explain": "Allocate 2048 from 2368. Level complete! System restored!" }
+    ],
+    "hints": ["scan -- find leaks first", "free all LEAK blocks", "sort -- group free blocks", "defrag -- merge them", "You may need to free additional blocks to fit 2048", "Use 'info' to check available memory"]
+  }
+]
