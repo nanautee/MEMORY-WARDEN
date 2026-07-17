@@ -412,7 +412,7 @@ export default function Home() {
 
         <div className="game-main">
           <div className="game-terminal-section">
-            <Terminal history={history} introText={false} />
+            <Terminal history={history} />
             <CommandLine onCommand={handleCommand} disabled={showComplete} />
           </div>
 

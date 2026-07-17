@@ -6,7 +6,7 @@ import GlitchText from "./GlitchText";
 
 interface TerminalProps {
   history: CommandHistoryEntry[];
-  introText?: string | false;
+  introText?: string;
 }
 
 export default function Terminal({ history, introText }: TerminalProps) {
@@ -20,7 +20,7 @@ export default function Terminal({ history, introText }: TerminalProps) {
 
   return (
     <div className="terminal-output" ref={scrollRef}>
-      {introText && introText !== false && (
+      {introText && (
         <div className="terminal-intro">
           <pre className="ascii-art">{`
  ██████╗ ███╗   ███╗██╗    ███████╗ ██████╗ █████╗ ███╗   ██╗
