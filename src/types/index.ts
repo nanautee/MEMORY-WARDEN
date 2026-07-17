@@ -14,7 +14,7 @@ export interface Level {
   hints: string[];
   solution: SolutionStep[];
   objectives: Objective[];
-  初始Blocks: InitialBlock[];
+  initialBlocks: InitialBlock[];
   maxMemory: number;
   targetEfficiency?: number;
 }

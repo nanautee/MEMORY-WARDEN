@@ -111,7 +111,7 @@ export default function Home() {
 
       Engine.setTotalMemory(level.maxMemory);
 
-      for (const block of level.初始Blocks) {
+      for (const block of level.initialBlocks) {
         const id = Engine.alloc(block.size);
         if (block.isFree && id >= 0) {
           Engine.free(id);

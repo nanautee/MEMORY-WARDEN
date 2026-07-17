@@ -9,7 +9,7 @@
       { "type": "free", "description": "Free the allocated block", "target": 1, "completed": false },
       { "type": "alloc", "description": "Allocate three blocks (128, 64, 512)", "target": 3, "completed": false }
     ],
-    "初始Blocks": [],
+    "initialBlocks": [],
     "maxMemory": 4096,
     "solution": [
       { "cmd": "alloc 256", "explain": "Allocate 256 bytes. Block #0 created." },
@@ -29,7 +29,7 @@
       { "type": "defrag", "description": "Defragment memory", "target": 1, "completed": false },
       { "type": "alloc", "description": "Allocate a 1024-byte block", "target": 1, "completed": false }
     ],
-    "初始Blocks": [
+    "initialBlocks": [
       { "size": 256, "isFree": true },
       { "size": 512, "isFree": true },
       { "size": 256, "isFree": true },
@@ -56,7 +56,7 @@
       { "type": "scan", "description": "Scan for memory leaks", "target": 1, "completed": false },
       { "type": "free_all_leaks", "description": "Free all leaked blocks", "target": 3, "completed": false }
     ],
-    "初始Blocks": [
+    "initialBlocks": [
       { "size": 64, "isFree": false, "isLeak": false },
       { "size": 128, "isFree": false, "isLeak": true },
       { "size": 256, "isFree": false, "isLeak": false },
@@ -84,7 +84,7 @@
       { "type": "defrag", "description": "Defragment after sorting", "target": 1, "completed": false },
       { "type": "alloc", "description": "Allocate a 1024-byte block", "target": 1, "completed": false }
     ],
-    "初始Blocks": [
+    "initialBlocks": [
       { "size": 512, "isFree": true },
       { "size": 128, "isFree": false },
       { "size": 256, "isFree": true },
@@ -114,7 +114,7 @@
       { "type": "defrag", "description": "Defragment memory", "target": 1, "completed": false },
       { "type": "alloc", "description": "Allocate a 2048-byte block", "target": 1, "completed": false }
     ],
-    "初始Blocks": [
+    "initialBlocks": [
       { "size": 512, "isFree": false, "isLeak": true },
       { "size": 256, "isFree": true },
       { "size": 128, "isFree": false },
